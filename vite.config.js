@@ -1,15 +1,27 @@
 // vite.config.js
 import { resolve } from "path";
 import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 export default defineConfig({
+  test: {
+    globals: true,
+    environment: "jsdom",
+  },
+  plugins: [
+    dts({
+      insertTypesEntry: true,
+      exclude: "**/**/*.stories.ts",
+    }),
+  ],
   build: {
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: resolve(__dirname, "lib/index.ts"),
+      entry: {
+        button: resolve("lib", "Button/index.ts"),
+        accordion: resolve("lib", "Accordion/index.ts"),
+      },
       name: "WebPrimitives",
-      // the proper extensions will be added
-      fileName: "web-primitives",
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

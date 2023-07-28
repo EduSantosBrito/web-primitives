@@ -1,21 +1,59 @@
 {
   "name": "web-primitives",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.9",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/web-primitives.umd.cjs",
+  "module": "./dist/web-primitives.js",
   "scripts": {
-    "dev": "vite",
+    "preinstall": "npx only-allow pnpm",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev": "pnpm build && storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "prepublishOnly": "pnpm build",
+    "generate:component": "node scripts/generate-component.mjs && prettier --write ./ && eslint --fix ./",
+    "test": "vitest"
   },
-  "dependencies": {
-    "lit": "^2.7.6"
+  "peerDependencies": {
+    "lit": "2.x"
   },
   "devDependencies": {
+    "@clack/prompts": "^0.6.3",
+    "@storybook/addon-essentials": "^7.1.1",
+    "@storybook/addon-links": "^7.1.1",
+    "@storybook/blocks": "^7.1.1",
+    "@storybook/web-components": "^7.1.1",
+    "@storybook/web-components-vite": "^7.1.1",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
     "eslint": "^8.45.0",
+    "eslint-plugin-lit": "^1.8.3",
+    "eslint-plugin-storybook": "^0.6.13",
+    "jsdom": "^22.1.0",
+    "lit": "^2.7.6",
+    "lit-analyzer": "^1.2.1",
+    "picocolors": "^1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.1.1",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.3.1",
+    "vitest": "^0.33.0"
+  },
+  "exports": {
+    "./button": {
+      "import": "./dist/button.js",
+      "require": "./dist/button.cjs",
+      "types": "./dist/button.d.ts"
+    },
+    "./accordion": {
+      "import": "./dist/accordion.js",
+      "require": "./dist/accordion.cjs",
+      "types": "./dist/accordion.d.ts"
+    }
   }
 }
